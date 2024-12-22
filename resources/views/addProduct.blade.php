@@ -7,13 +7,14 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-6">Tambah Produk Baru</h2>
 
-                    <form id="productForm" class="space-y-6">
+                    <form action="{{ route('product.store') }}" method="POST" id="productForm" class="space-y-6" enctype="multipart/form-data">
+                        @csrf
                         <!-- Nama Barang -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Nama Barang
                             </label>
-                            <input type="text" required
+                            <input type="text" required name="name"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                 placeholder="Masukkan nama barang">
                         </div>
@@ -24,27 +25,26 @@
                                 Kategori
                             </label>
                             <select required
+                                name="category"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
                                 <option value="">Pilih kategori</option>
-                                <option value="elektronik">Elektronik</option>
-                                <option value="fashion">Fashion</option>
-                                <option value="makanan">Makanan</option>
-                                <option value="minuman">Minuman</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
                             </select>
                         </div>
 
-                        <!-- Supplier -->
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+                            <input type="number" name="price" id="price" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
+                        </div>
+
+                        <!-- Description -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Supplier
+                                Description
                             </label>
-                            <select required
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
-                                <option value="">Pilih supplier</option>
-                                <option value="1">PT Maju Jaya</option>
-                                <option value="2">CV Berkah Abadi</option>
-                                <option value="3">UD Sejahtera</option>
-                            </select>
+                            <textarea name="description" id="description" cols="20" rows="5" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
                         </div>
 
                         <!-- Tanggal Masuk -->
@@ -53,17 +53,19 @@
                                 Tanggal Masuk
                             </label>
                             <input type="date" required
+                                name="tanggal_masuk"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
                         </div>
 
-                        <!-- Jumlah -->
+                        <!-- Stock -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">
-                                Jumlah
+                                Stock
                             </label>
                             <input type="number" required min="1"
+                                name="stock"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                placeholder="Masukkan jumlah barang">
+                                placeholder="Masukkan stock barang">
                         </div>
 
                         <!-- Foto Upload -->
@@ -85,7 +87,7 @@
                                             <label for="file-upload"
                                                 class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                                 <span>Upload file</span>
-                                                <input id="file-upload" name="file-upload" type="file"
+                                                <input id="file-upload" name="image" type="file"
                                                     class="sr-only" accept="image/*" onchange="previewImage(event)">
                                             </label>
                                             <p class="pl-1">atau drag and drop</p>
