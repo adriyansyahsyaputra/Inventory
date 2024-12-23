@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('stock');
             $table->date('entry_date');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

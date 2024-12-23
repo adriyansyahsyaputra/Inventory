@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'avatar',
     ];
 
     /**
@@ -45,5 +46,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public static function generateUserId($role): string {
+        $prefix = strtoupper(substr($role, 0, 3));
+        $number = rand(100, 999);
+
+        return $prefix . $number;
     }
 }

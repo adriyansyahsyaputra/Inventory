@@ -18,8 +18,8 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="hidden dropdown-menu" id="products">
-                    <a href="/table-product" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-table mr-2"></i>Table Product</a>
-                    <a href="/add-product" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-plus mr-2"></i>New Product</a>
+                    <a href="/products" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-table mr-2"></i>Table Product</a>
+                    <a href="/products/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-plus mr-2"></i>New Product</a>
                 </div>
             </div>
 
@@ -30,8 +30,8 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="hidden dropdown-menu" id="users">
-                    <a href="/table-user" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-list mr-2"></i>List User</a>
-                    <a href="/add-user" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-plus mr-2"></i>New User</a>
+                    <a href="/users/table-user" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-list mr-2"></i>List User</a>
+                    <a href="/users/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-plus mr-2"></i>New User</a>
                 </div>
             </div>
 

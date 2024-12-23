@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProductController;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('dashboard', [
@@ -11,31 +13,36 @@ Route::get('/', function () {
     ]);
 });
 
-// Route::get('/add-product', function () {
-//     return view('addProduct', [
-//         'title' => 'New Product',
-//         'categories' => Category::all()
+// Route Create
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+
+// Route Table
+Route::get('/products', [ProductController::class, 'index'])->name('products.table');
+Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
+
+// Route Update
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+
+Route::get('/products/update', function() {
+    return view('/products/update');
+});
+
+// Route::get('/users/create', function () {
+//     return view('/users/create', [
+//         'title' => 'New User'
 //     ]);
 // });
-Route::get('add-product', [ProductController::class, 'create'])->name('product.create');
-Route::post('add-product', [ProductController::class, 'store'])->name('product.store');
 
-Route::get('/table-product', function () {
-    return view('tableProduct', [
-        'title' => 'Table Product',
-        'products' => Product::all(),
-        'categories' => Category::all()
-    ]);
-});
+// Route For User
+Route::get('/users/create', [UserController::class, 'index'])->name('users.index');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
-Route::get('/add-user', function () {
-    return view('addUser', [
-        'title' => 'New User'
-    ]);
-});
 
-Route::get('/table-user', function () {
-    return view('tableUser', [
-        'title' => 'Table User'
+Route::get('/users/table-user', function () {
+    return view('/users/table', [
+        'title' => 'Table User',
+        'users' => User::all()
     ]);
 });

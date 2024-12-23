@@ -7,7 +7,8 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-6">Tambah Produk Baru</h2>
 
-                    <form action="{{ route('product.store') }}" method="POST" id="productForm" class="space-y-6" enctype="multipart/form-data">
+                    <form action="{{ route('products.store') }}" method="POST" id="productForm" class="space-y-6"
+                        enctype="multipart/form-data">
                         @csrf
                         <!-- Nama Barang -->
                         <div>
@@ -24,8 +25,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Kategori
                             </label>
-                            <select required
-                                name="category"
+                            <select required name="category_id"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
                                 <option value="">Pilih kategori</option>
                                 @foreach ($categories as $category)
@@ -36,7 +36,8 @@
 
                         <div>
                             <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price</label>
-                            <input type="number" name="price" id="price" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <input type="number" name="price" id="price"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
                         </div>
 
                         <!-- Description -->
@@ -44,7 +45,8 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Description
                             </label>
-                            <textarea name="description" id="description" cols="20" rows="5" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+                            <textarea name="description" id="description" cols="20" rows="5"
+                                class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
                         </div>
 
                         <!-- Tanggal Masuk -->
@@ -52,8 +54,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Tanggal Masuk
                             </label>
-                            <input type="date" required
-                                name="tanggal_masuk"
+                            <input type="date" required name="entry_date"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
                         </div>
 
@@ -62,8 +63,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 Stock
                             </label>
-                            <input type="number" required min="1"
-                                name="stock"
+                            <input type="number" required min="1" name="stock"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                                 placeholder="Masukkan stock barang">
                         </div>
@@ -87,8 +87,8 @@
                                             <label for="file-upload"
                                                 class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                                 <span>Upload file</span>
-                                                <input id="file-upload" name="image" type="file"
-                                                    class="sr-only" accept="image/*" onchange="previewImage(event)">
+                                                <input id="file-upload" name="image" type="file" class="sr-only"
+                                                    accept="image/*" onchange="previewImage(event)">
                                             </label>
                                             <p class="pl-1">atau drag and drop</p>
                                         </div>
