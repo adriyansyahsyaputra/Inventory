@@ -17,7 +17,7 @@ Route::get('/', function () {
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 
-// Route Table
+// Route Delete Table
 Route::get('/products', [ProductController::class, 'index'])->name('products.table');
 Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
 
@@ -29,16 +29,18 @@ Route::get('/products/update', function() {
     return view('/products/update');
 });
 
-// Route::get('/users/create', function () {
-//     return view('/users/create', [
-//         'title' => 'New User'
-//     ]);
-// });
 
 // Route For User
 Route::get('/users/create', [UserController::class, 'index'])->name('users.index');
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
+// Route Delete For User
+Route::get('/users', [UserController::class, 'index'])->name('users.table');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+// Route Update For User
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 
 Route::get('/users/table-user', function () {
     return view('/users/table', [

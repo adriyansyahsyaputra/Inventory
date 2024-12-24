@@ -17,13 +17,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-        'avatar',
-    ];
+
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,10 +43,14 @@ class User extends Authenticatable
         ];
     }
 
-    public static function generateUserId($role): string {
+    public static function generateUserId($role): string
+    {
         $prefix = strtoupper(substr($role, 0, 3));
-        $number = rand(100, 999);
+        do {
+            $number = rand(100, 999);
+            $userId = $prefix . $number;
+        } while (User::where('user_id', $userId)->exists());
 
-        return $prefix . $number;
+        return $userId;
     }
 }
