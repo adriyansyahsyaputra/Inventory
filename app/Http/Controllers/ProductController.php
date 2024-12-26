@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -20,7 +22,7 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
-        
+
         return view('products.table', compact('products', 'categories'));
     }
 
@@ -49,7 +51,7 @@ class ProductController extends Controller
                 : null;
 
             // Simpan data produk ke database
-            Product::create([
+            $product = Product::create([
                 'product_code' => $productCode,
                 'name' => $validated['name'],
                 'category_id' => $validated['category_id'],
@@ -58,6 +60,16 @@ class ProductController extends Controller
                 'stock' => $validated['stock'],
                 'entry_date' => $validated['entry_date'],
                 'image' => $imagePath,
+            ]);
+
+            // Log activity - Menambahkan produk baru
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'product_id' => $product->id,
+                'action' => 'created',
+                'category_id' => $validated['category_id'],
+                'details' => 'Product ' . $validated['name'] . ' has been created.',
+                'date' => now(),
             ]);
 
             return redirect()->route('products')->with('success', 'Product created successfully.');
@@ -88,6 +100,17 @@ class ProductController extends Controller
         }
 
         $product->delete();
+
+        // Log activity - Menghapus produk
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'product_id' => $product->id,
+            'action' => 'deleted',
+            'category_id' => $product->category_id,
+            'details' => 'Product ' . $product->name . ' has been deleted.',
+            'date' => now(),
+        ]);
+        ActivityLog::where('product_id', $id)->count();
 
         return redirect()->route('products.table')->with('success', 'Product deleted successfully');
     }
@@ -125,6 +148,9 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // gambar tidak wajib
         ]);
 
+        // Menyimpan data lama untuk mencatat perubahan
+        $oldProduct = $product->getOriginal();
+
         // Update data produk
         $product->name = $request->name;
         $product->price = $request->price;
@@ -156,6 +182,29 @@ class ProductController extends Controller
 
         // Simpan perubahan ke database
         $product->save();
+
+        // Menyusun detail perubahan untuk Activity Log
+        $changedAttributes = $product->getDirty(); // Kolom yang berubah
+        $details = 'Updated product: ' . $product->name . '. Changes: ';
+
+        // Memasukkan perubahan atribut yang berubah ke dalam detail log
+        foreach ($changedAttributes as $attribute => $newValue) {
+            $oldValue = $oldProduct[$attribute] ?? 'N/A'; // Nilai lama, jika ada
+            $details .= ucfirst($attribute) . ' changed from "' . $oldValue . '" to "' . $newValue . '", ';
+        }
+
+        // Menghilangkan koma terakhir
+        $details = rtrim($details, ', ');
+
+        // Log activity - Memperbarui produk
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'product_id' => $product->id,
+            'action' => 'updated',
+            'category_id' => $product->category_id,
+            'details' => $details,
+            'date' => now(),
+        ]);
 
         return redirect()->route('products.table')->with('success', 'Product updated successfully');
     }

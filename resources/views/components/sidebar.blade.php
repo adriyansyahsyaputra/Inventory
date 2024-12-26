@@ -30,14 +30,14 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="hidden dropdown-menu" id="users">
-                    <a href="/users/table-user" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-list mr-2"></i>List User</a>
+                    <a href="/users" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-list mr-2"></i>List User</a>
                     <a href="/users/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-plus mr-2"></i>New User</a>
                 </div>
             </div>
 
             <div class="mb-4">
-                <a href="/" class="block py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100">
-                    <i class="fa-solid fa-chart-line mr-2 text-lg"></i>Log Product
+                <a href="/log-activity" class="block py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100">
+                    <i class="fa-solid fa-chart-line mr-2 text-lg"></i>Log Activity
                 </a>
             </div>
             <div class="mb-4">
