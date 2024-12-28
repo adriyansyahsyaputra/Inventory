@@ -13,30 +13,39 @@
 
             <!-- Menu Products with Dropdown -->
             <div class="mb-4">
-                <div class="flex justify-between items-center py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100 cursor-pointer dropdown-toggle" data-dropdown="products">
+                <div class="flex justify-between items-center py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100 cursor-pointer dropdown-toggle"
+                    data-dropdown="products">
                     <span><i class="fa-solid fa-bag-shopping mr-2 text-lg"></i>Products</span>
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="hidden dropdown-menu" id="products">
-                    <a href="/products" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-table mr-2"></i>Table Product</a>
-                    <a href="/products/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-plus mr-2"></i>New Product</a>
+                    <a href="/products" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i
+                            class="fa-solid fa-table mr-2"></i>Table Product</a>
+                    <a href="/products/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i
+                            class="fa-solid fa-plus mr-2"></i>New Product</a>
                 </div>
             </div>
 
             <!-- Menu Users with Dropdown -->
-            <div class="mb-4">
-                <div class="flex justify-between items-center py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100 cursor-pointer dropdown-toggle" data-dropdown="users">
-                    <span><i class="fa-solid fa-user mr-2 text-lg"></i>Users</span>
-                    <i class="fa-solid fa-chevron-down"></i>
+            @can('admin')
+                <div class="mb-4">
+                    <div class="flex justify-between items-center py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100 cursor-pointer dropdown-toggle"
+                        data-dropdown="users">
+                        <span><i class="fa-solid fa-user mr-2 text-lg"></i>Users</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="hidden dropdown-menu" id="users">
+                        <a href="/users" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i
+                                class="fa-solid fa-list mr-2"></i>List User</a>
+                        <a href="/users/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i
+                                class="fa-solid fa-plus mr-2"></i>New User</a>
+                    </div>
                 </div>
-                <div class="hidden dropdown-menu" id="users">
-                    <a href="/users" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-list mr-2"></i>List User</a>
-                    <a href="/users/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i class="fa-solid fa-plus mr-2"></i>New User</a>
-                </div>
-            </div>
+            @endcan
 
             <div class="mb-4">
-                <a href="/log-activity" class="block py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100">
+                <a href="/log-activity"
+                    class="block py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100">
                     <i class="fa-solid fa-chart-line mr-2 text-lg"></i>Log Activity
                 </a>
             </div>

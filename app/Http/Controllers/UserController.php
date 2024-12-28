@@ -6,11 +6,14 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
     public function index()
     {
+        Gate::authorize('admin');
+
         $users = User::all();
 
         return view('users.table', compact('users'));

@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\User;
-use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -27,7 +24,7 @@ Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('pro
 Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
 Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 
-Route::get('/products/update', function() {
+Route::get('/products/update', function () {
     return view('/products/update');
 });
 
@@ -46,7 +43,7 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 
 
 // Route For Log activity
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/log-activity', [ActivityLogController::class, 'index'])->name('logs.index');
     Route::post('/log-activity', [ActivityLogController::class, 'storeLog'])->name('logs.store');
 });
