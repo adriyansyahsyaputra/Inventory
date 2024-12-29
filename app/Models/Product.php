@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -33,5 +34,10 @@ class Product extends Model
         $number = rand(100, 999);
 
         return $prefix . $number;
+    }
+
+    public function StockTransaction(): HasMany
+    {
+        return $this->hasMany(StockTransaction::class);
     }
 }

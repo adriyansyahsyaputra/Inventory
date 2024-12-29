@@ -1,10 +1,13 @@
 <?php
 
+use App\Exports\TransactionsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\StockTransactionController;
 
 Route::get('/', function () {
     return view('dashboard', [
@@ -55,3 +58,15 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 
 // Route For Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Route for Reports
+Route::get('/transactions-list', [StockTransactionController::class, 'index'])->name('index');
+
+// Route for Transaction
+Route::get('/transactions/create', [StockTransactionController::class, 'create'])->name('transactions.create');
+Route::post('/transactions', [StockTransactionController::class, 'recordTransaction'])->name('transactions.record');
+
+// Route for Export
+Route::get('/transactions/export', function () {
+    return Excel::download(new TransactionsExport, 'transactions.xlsx');
+})->name('transactions.export');
