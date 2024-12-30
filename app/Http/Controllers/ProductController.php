@@ -20,8 +20,20 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::all();
+        $products =
+            Product::with('category')->get();
         $categories = Category::all();
+
+        // Fungsi search
+        if (request('search')) {
+            $products = Product::where('name', 'like', '%' . request('search') . '%')
+            ->orWhere('product_code', 'like', '%' . request('search') . '%')
+            ->get();
+        }
+
+        if (request('category')) {
+            $products = Product::where('category_id', request('category'))->get();
+        }
 
         return view('products.table', compact('products', 'categories'));
     }
@@ -88,29 +100,25 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return redirect()->route('products.table')->with('error', 'Product not found');
-        }
-
-        // Hapus gambar jika ada
-        if ($product->image && file_exists(public_path('storage/' . $product->image))) {
-            unlink(public_path('storage/' . $product->image));
-        }
-
-        $product->delete();
+        $product = Product::findOrFail($id);
 
         // Log activity - Menghapus produk
         ActivityLog::create([
             'user_id' => Auth::id(),
             'product_id' => $product->id,
+            'product_name' => $product->name,
             'action' => 'deleted',
             'category_id' => $product->category_id,
-            'details' => 'Product ' . $product->name . ' has been deleted.',
-            'date' => now(),
+            'details' => "Product {$product->name} has been deleted",
+            'date' => now()
         ]);
-        ActivityLog::where('product_id', $id)->count();
+
+        // Hapus gambar jika ada
+        if ($product->image && Storage::disk('public')->exists($product->image)) {
+            Storage::disk('public')->delete($product->image);
+        }
+
+        $product->delete();
 
         return redirect()->route('products.table')->with('success', 'Product deleted successfully');
     }
@@ -185,7 +193,7 @@ class ProductController extends Controller
 
         // Menyusun detail perubahan untuk Activity Log
         $changedAttributes = $product->getDirty(); // Kolom yang berubah
-        $details = 'Updated product: ' . $product->name . '. Changes: ';
+        $details = 'Updated: ' . $product->name . '. Changes: ';
 
         // Memasukkan perubahan atribut yang berubah ke dalam detail log
         foreach ($changedAttributes as $attribute => $newValue) {

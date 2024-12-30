@@ -17,16 +17,17 @@ return new class extends Migration
                 table: 'users',
                 indexName: 'activity_logs_user_id'
             );
-            $table->foreignId('product_id')->constrained(
+            $table->foreignId('product_id')->nullable()->constrained(
                 table: 'products',
                 indexName: 'activity_logs_product_id'
-            )->onDelete('cascade');
+            );
+            $table->string('product_name')->nullable();
             $table->string('action');
             $table->foreignId('category_id')->constrained(
                 table: 'categories',
                 indexName: 'activity_logs_category_id'
             );
-            $table->string('details');
+            $table->string('details')->nullable();
             $table->timestamp('date')->useCurrent();
             $table->timestamps();
         });

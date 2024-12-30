@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,10 +26,16 @@ class ActivityLogController extends Controller
             'date' => 'required|date',
         ]);
 
+        $product = Product::find($request->product_id);
+        if (!$product) {
+            return redirect()->back()->withErrors(['product_id' => 'Produk tidak ditemukan']);
+        }   
+
         // Simpan data ke database
         ActivityLog::create([
             'user_id' => Auth::id(),
             'product_id' => $request->product_id,
+            'product_name' => $product->name,
             'action' => $request->action,
             'category_id' => $request->category_id,
             'details' => $request->details,

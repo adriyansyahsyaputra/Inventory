@@ -28,7 +28,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Total Transaksi</p>
-                    <p class="text-2xl font-semibold text-gray-900">1,257</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $totalTransactions }}</p>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Barang Masuk</p>
-                    <p class="text-2xl font-semibold text-gray-900">845</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $totalIn }}</p>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Barang Keluar</p>
-                    <p class="text-2xl font-semibold text-gray-900">412</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $totalOut }}</p>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Total Produk</p>
-                    <p class="text-2xl font-semibold text-gray-900">156</p>
+                    <p class="text-2xl font-semibold text-gray-900">{{ $totalProducts }}</p>
                 </div>
             </div>
         </div>
@@ -214,3 +214,22 @@
         </div>
     </div>
 </x-layout>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('transactionChart').getContext('2d');
+        const chartData = @json($chartData);
+
+        new Chart(ctx, {
+            type: 'bar', // Jenis grafik: bar, line, pie, dll.
+            data: chartData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                },
+            },
+        });
+    });
+</script>

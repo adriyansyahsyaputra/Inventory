@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\StockTransaction;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +14,29 @@ class StockTransactionController extends Controller
     {
         $transactions = StockTransaction::with('category', 'user')->get();
 
-        return view('transactions.index', compact('transactions'));
+        // Data for Card
+        $totalTransactions = $transactions->count();
+        $totalIn = $transactions->where('type', 'in')->sum('quantity');
+        $totalOut = $transactions->where('type', 'out')->sum('quantity');
+        $totalProducts = Product::count();
+
+        // Data for Graphic
+        $chartData = [
+            'labels' => ['Barang Masuk', 'Barang Keluar'],
+            'datasets' => [
+                [
+                    'label' => 'Jumlah Transaksi',
+                    'backgroundColor' => ['#36A2EB', '#FF6384'],
+                    'data' => [$totalIn, $totalOut]
+                ]
+            ]
+        ];
+
+        return view('transactions.index', compact('transactions', 'totalTransactions', 'totalIn', 'totalOut', 'totalProducts', 'chartData'));
     }
 
     public function create()
-    {  
+    {
         $categories = Category::all();
 
         return view('transactions.create', compact('categories'));

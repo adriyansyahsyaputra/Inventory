@@ -19,112 +19,117 @@
         </div>
 
         <!-- Filter & Search -->
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="md:col-span-2">
-                <input type="text" placeholder="Cari produk..."
-                    class="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <form action="" class="space-y-4 md:space-y-0 flex justify-between mt-4">
+            <!-- Input dan Tombol Pencarian -->
+            <div class="flex items-center space-x-2">
+                <input type="text" placeholder="Cari produk..." name="search"
+                    class="flex-1 px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit"
+                    class="px-6 py-2 rounded-r-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Search
+                </button>
             </div>
-            <div>
-                <select
+
+            <!-- Dropdown Kategori -->
+            <div class="mt-4 md:mt-0 md:ml-4">
+                <select name="category"
                     class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Semua Kategori</option>
-                    <option value="elektronik">Elektronik</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="makanan">Makanan</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ request('category') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
-            <div>
-                <select
-                    class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Semua Supplier</option>
-                    <option value="1">PT Maju Jaya</option>
-                    <option value="2">CV Berkah Abadi</option>
-                    <option value="3">UD Sejahtera</option>
-                </select>
-            </div>
-        </div>
+        </form>
+
+
     </div>
 
     <!-- Table -->
     <div class="bg-white rounded-lg shadow">
         <div class="overflow-x-auto">
-                <table class="min-w-full table-auto divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Gambar</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Nama</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Kategori</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Harga</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Tanggal Masuk</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Jumlah</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Contoh Baris -->
-                        @foreach ($products as $product)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->product_code }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if ($product->image && file_exists(public_path('storage/' . $product->image)))
-                                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                            class="h-10 w-10 rounded-lg object-cover">
-                                    @elseif ($product->image && file_exists(public_path('img/product/' . $product->image)))
-                                        <img src="{{ asset('img/product/' . $product->image) }}" alt="{{ $product->name }}"
-                                            class="h-10 w-10 rounded-lg object-cover">
-                                    @else
-                                        <img src="{{ asset('img/product/default.jpg') }}" alt="{{ $product->name }}"
-                                            class="h-10 w-10 rounded-lg object-cover">
-                                    @endif
+            <table class="min-w-full table-auto divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Gambar</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Nama</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Kategori</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Harga</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Tanggal Masuk</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Jumlah</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Action</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <!-- Contoh Baris -->
+                    @foreach ($products as $product)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->product_code }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($product->image && file_exists(public_path('storage/' . $product->image)))
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                        class="h-10 w-10 rounded-lg object-cover">
+                                @elseif ($product->image && file_exists(public_path('img/product/' . $product->image)))
+                                    <img src="{{ asset('img/product/' . $product->image) }}" alt="{{ $product->name }}"
+                                        class="h-10 w-10 rounded-lg object-cover">
+                                @else
+                                    <img src="{{ asset('img/product/default.jpg') }}" alt="{{ $product->name }}"
+                                        class="h-10 w-10 rounded-lg object-cover">
+                                @endif
 
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                        {{ $product->category->name }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp. {{ $product->price }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->entry_date }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->stock }}</td>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                    {{ $product->category->name }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Rp. {{ $product->price }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->entry_date }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->stock }}</td>
 
-                                <td class="px-6 py-4 flex whitespace-nowrap text-sm font-medium space-x-2">
-                                    <a href="{{ route('products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-900">
+                            <td class="px-6 py-4 flex whitespace-nowrap text-sm font-medium space-x-2">
+                                <a href="{{ route('products.edit', $product->id) }}"
+                                    class="text-blue-600 hover:text-blue-900">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                </a>
+                                <form action="{{ route('products.delete', $product->id) }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-900" title="Delete">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
-                                    </a>
-                                    <form action="{{ route('products.delete', $product->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900" title="Delete">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
 
         <!-- Pagination -->
