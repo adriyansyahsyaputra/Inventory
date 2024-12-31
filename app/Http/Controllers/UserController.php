@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,6 +15,15 @@ class UserController extends Controller
         Gate::authorize('admin');
 
         $users = User::all();
+
+        // Search input
+        if (request('search')) {
+            $users = User::where('name', 'like', '%' . request('search') . '%')->get();
+        }
+
+        if (request('role')) {
+            $users = User::where('role', request('role'))->get();
+        }
 
         return view('users.table', compact('users'));
     }

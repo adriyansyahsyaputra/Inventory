@@ -52,20 +52,15 @@
             <div class="mb-4">
                 <div class="flex justify-between items-center py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100 cursor-pointer dropdown-toggle"
                     data-dropdown="transaction">
-                    <span><i class="fa-solid fa-user mr-2 text-lg"></i>Transactions</span>
+                    <span><i class="fa-solid fa-cart-shopping mr-2 text-lg"></i>Transactions</span>
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
                 <div class="hidden dropdown-menu" id="transaction">
                     <a href="/transactions/create" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i
-                            class="fa-solid fa-list mr-2"></i>New Transaction</a>
+                            class="fa-solid fa-plus mr-2"></i>New Transaction</a>
                     <a href="/transactions-list" class="block py-2 px-8 text-gray-700 hover:bg-teal-50 text-sm"><i
-                            class="fa-solid fa-plus mr-2"></i>List Transaction</a>
+                            class="fa-solid fa-list mr-2"></i>List Transaction</a>
                 </div>
-            </div>
-            <div class="mb-4">
-                <a href="/reports" class="block py-2 px-4 text-gray-900 rounded hover:font-medium hover:bg-teal-100">
-                    <i class="fa-solid fa-book mr-2 text-lg"></i>Reports
-                </a>
             </div>
         </nav>
     </div>

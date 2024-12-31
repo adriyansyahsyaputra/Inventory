@@ -19,21 +19,28 @@
         </div>
 
         <!-- Filter & Search -->
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="md:col-span-2">
-                <input type="text" placeholder="Cari user..."
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <form action="{{ url()->current() }}" class="space-y-4 md:space-y-0 flex justify-between mt-4">
+            <!-- Input dan Tombol Pencarian -->
+            <div class="flex items-center space-x-2">
+                <input type="text" placeholder="Cari user..." name="search"
+                    class="flex-1 px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit"
+                    class="px-6 py-2 rounded-r-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Search
+                </button>
             </div>
-            <div>
-                <select
-                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Semua Role</option>
-                    <option value="admin">Admin</option>
-                    <option value="manager">Manager</option>
-                    <option value="staff">Staff</option>
+
+            <!-- Dropdown Kategori -->
+            <div class="mt-4 md:mt-0 md:ml-4">
+                <select name="role"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Semua Kategori</option>
+                    <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="manager" {{ request('role') == 'manager' ? 'selected' : '' }}>Manager</option>
+                    <option value="staff" {{ request('role') == 'staff' ? 'selected' : '' }}>Staff</option>
                 </select>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- Table -->
@@ -109,7 +116,8 @@
                                 @endif
                             </td>
                             <td class="px-6 flex py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                <a href="{{ route('users.edit', $user->id) }}" class="text-blue-600 hover:text-blue-900" title="Edit">
+                                <a href="{{ route('users.edit', $user->id) }}"
+                                    class="text-blue-600 hover:text-blue-900" title="Edit">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />

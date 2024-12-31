@@ -27,7 +27,7 @@
 <body class="min-h-screen flex bg-slate-100 font-inter">
 
     <x-sidebar></x-sidebar>
-    <div class="flex-1 ml-56">
+    <div class="flex-1 ml-60">
         <x-topbar></x-topbar>
 
         <main class="p-6">
